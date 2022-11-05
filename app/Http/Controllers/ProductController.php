@@ -7,6 +7,8 @@ use App\Models\ProductVariant;
 use App\Models\ProductVariantPrice;
 use App\Models\Variant;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -17,7 +19,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('products.index');
+        //$products = products()->latest()->paginate(10);
+        $products = Product::paginate(10);
+        //$products = Product::all();
+        //return view('products.index', compact('products'));
+
+    
+        return view('products.index',compact('products'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

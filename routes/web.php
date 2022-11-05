@@ -27,3 +27,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('blog', 'BlogController');
     Route::resource('blog-category', 'BlogCategoryController');
 });
+
+
+Route::resource('products', 'App\Http\Controllers\ProductController');
