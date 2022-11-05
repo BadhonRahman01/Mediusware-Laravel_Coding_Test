@@ -82,7 +82,7 @@
 
                 </table>
                 {{-- Pagination --}}
-                {{ $products->links()}}
+                {{-- {{ $products->links()}} --}}
             </div>
 
         </div>

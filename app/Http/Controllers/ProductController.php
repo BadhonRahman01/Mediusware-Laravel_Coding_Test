@@ -48,7 +48,38 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'sku' => 'required|unique',
+            'description' => 'nullable',
+        ]);
+    
+        Product::create($request->all());
+        $request->validate([
+            'product_id' => 'required',
+            'file_path' => 'required',
+            'thumbnail' => 'nullable',
+        ]);
+        Product_image::create($request->all());
+        
+        $request->validate([
+            'variant' => 'required',
+            'variant_id' => 'required',
+            'product_id' => 'required',
+        ]);
+        Product_variant::create($request->all());
+        $request->validate([
+            'product_variant_one' => 'nullable',
+            'product_variant_two' => 'nullable',
+            'product_variant_three' => 'nullable',
+            'price' => 'required',
+            'stock' => 'nullable',
+            'product_id' => 'required',
+        ]);
+    Pproduct_variant_price::create($request->all());
 
+        return redirect()->route('products.index')
+                        ->with('success','Product created successfully.');
     }
 
 
@@ -84,7 +115,39 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'sku' => 'required|unique',
+            'description' => 'nullable',
+        ]);
+    
+        Product::update($request->all());
+        $request->validate([
+            'product_id' => 'required',
+            'file_path' => 'required',
+            'thumbnail' => 'nullable',
+        ]);
+        Product_image::update($request->all());
+        
+        $request->validate([
+            'variant' => 'required',
+            'variant_id' => 'required',
+            'product_id' => 'required',
+        ]);
+        Product_variant::update($request->all());
+        $request->validate([
+            'product_variant_one' => 'nullable',
+            'product_variant_two' => 'nullable',
+            'product_variant_three' => 'nullable',
+            'price' => 'required',
+            'stock' => 'nullable',
+            'product_id' => 'required',
+        ]);
+    Pproduct_variant_price::update($request->all());
+
+        return redirect()->route('products.index')
+                        ->with('success','Product created successfully.');
+    }
     }
 
     /**
@@ -95,6 +158,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('product.index')
+                        ->with('success','Product deleted successfully');
     }
 }
